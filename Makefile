@@ -15,8 +15,9 @@ gen-code:
 	cp _docker/run.sh code/
 	cp _docker/etc.locale.gen code/
 
+## Please install the command as following: $ pip3 install openapi-spec-validator --user
 validate:
-	/home/yasu/.local/bin/openapi-spec-validator openapi.yaml
+	$(HOME)/.local/bin/openapi-spec-validator openapi.yaml
 
 clean:
 	find . -type f -name '*~' | xargs rm
