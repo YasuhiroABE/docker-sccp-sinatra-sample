@@ -11,12 +11,12 @@ URI_PATH = search
 
 .PHONY: run bundle-install docker-build docker-run docker-stop
 
-run:
+run: bundle-install
 	env FORM_BASEURI="$(PROTOCOL)://$(HOST):$(PORT)/$(URI_PATH)" \
 		bundle exec rackup --host $(HOST) --port $(PORT)
 
 bundle-install:
-	bundle install
+	bundle install --path lib
 
 docker-build:
 	sudo docker build . --tag $(IMAGE_NAME)
