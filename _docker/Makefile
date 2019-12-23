@@ -9,7 +9,7 @@ HOST = 127.0.0.1
 PORT = 8080
 URI_PATH = search
 
-.PHONY: run bundle-install docker-build docker-run docker-stop
+.PHONY: run bundle-install docker-build docker-run docker-stop stop
 
 run: bundle-install
 	env FORM_BASEURI="$(PROTOCOL)://$(HOST):$(PORT)/$(URI_PATH)" \
@@ -31,6 +31,9 @@ docker-run:
 		--name $(NAME) \
                 $(IMAGE_NAME)
 
-stop:
+docker-stop:
 	sudo docker stop $(NAME)
+
+stop:
+	killall ruby2.5
 
