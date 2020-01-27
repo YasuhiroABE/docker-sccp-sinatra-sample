@@ -1,10 +1,7 @@
-FROM ubuntu:18.04
+FROM ruby:2.7-alpine
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ruby ruby-sinatra ruby-httpclient ruby-rack ruby-sinatra-contrib ruby-bundler bundler locales ruby-parslet
-
-COPY etc.locale.gen /etc/locale.gen
-RUN locale-gen
+RUN apk update && \
+	apk add --no-cache tzdata bash ca-certificates
 
 COPY . /app
 WORKDIR /app
@@ -17,7 +14,8 @@ EXPOSE $SINATRA_PORT
 ADD run.sh /run.sh
 RUN chmod +x /run.sh
 
-RUN useradd -m sinatra
+RUN addgroup sinatra
+RUN adduser -S -G sinatra sinatra
 USER sinatra
 
 ENTRYPOINT ["/run.sh"]
