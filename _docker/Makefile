@@ -21,9 +21,15 @@ bundle-install:
 	bundle install --path lib
 
 docker-build:
+	rm -f Gemfile.lock
+	rm -fr lib/ruby
+	rm -fr .bundle
 	sudo docker build . --tag $(IMAGE_NAME)
 
 docker-build-prod:
+	rm -f Gemfile.lock
+	rm -fr lib/ruby
+	rm -fr .bundle
 	sudo docker build . --tag $(IMAGE_NAME):$(DOCKER_IMAGE_VERSION) --no-cache
 
 docker-tag:
