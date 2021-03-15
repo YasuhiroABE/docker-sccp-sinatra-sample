@@ -18,7 +18,7 @@ run: bundle-install
 		bundle exec rackup --host $(HOST) --port $(PORT)
 
 bundle-install:
-	bundle install --path lib
+	bundle config set path 'lib'
 
 docker-build:
 	rm -f Gemfile.lock
