@@ -1,8 +1,8 @@
-= README.md
+# README.md
 
 This project contains the sample docker implementation deribed from the openapi.yaml file.
 
-= Getting started
+# Getting started
 
 ```
 ## If the openapi-generator-cli has not been installed yet.
