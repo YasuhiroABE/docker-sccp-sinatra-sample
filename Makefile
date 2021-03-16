@@ -2,7 +2,7 @@
 OAGEN_CLI = openapi-generator-cli
 OASV_CLI = $(HOME)/.local/bin/openapi-spec-validator
 
-.PHONY: manual gen-docs gen-code validate run
+.PHONY: manual gen-docs gen-code validate clean diff-files
 
 manual:
 	firefox "https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md"
@@ -23,3 +23,10 @@ validate:
 
 clean:
 	find . -type f -name '*~' | xargs rm
+
+diff-files:
+	diff -u _docker/Makefile code/Makefile
+	diff -u _docker/Dockerfile code/Dockerfile
+	diff -u _docker/run.sh code/run.sh
+	diff -u _docker/Gemfile code/Gemfile
+
