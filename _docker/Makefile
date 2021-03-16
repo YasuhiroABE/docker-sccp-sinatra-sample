@@ -11,14 +11,15 @@ HOST = 0.0.0.0
 PORT = 8080
 URI_PATH = search
 
-.PHONY: run bundle-install docker-build docker-run docker-stop
+.PHONY: run bundle-install docker-build docker-build-prod docker-tag docker-push docker-run docker-stop stop
 
 run: bundle-install
 	env FORM_BASEURI="$(PROTOCOL)://$(HOST):$(PORT)/$(URI_PATH)" \
 		bundle exec rackup --host $(HOST) --port $(PORT)
 
 bundle-install:
-	bundle config set path 'lib'
+	bundle config set path lib
+	bundle install
 
 docker-build:
 	rm -f Gemfile.lock
@@ -39,7 +40,7 @@ docker-push:
 	sudo docker push $(REGISTRY_SERVER)/$(REGISTRY_LIBRARY)/$(IMAGE_NAME):$(DOCKER_IMAGE_VERSION)
 
 docker-run:
-	sudo docker run -it --rm -d \
+	sudo docker run -it --rm  \
 		--env LC_CTYPE=ja_JP.UTF-8 \
 		-p 8080:8080 \
 		--name $(NAME) \
