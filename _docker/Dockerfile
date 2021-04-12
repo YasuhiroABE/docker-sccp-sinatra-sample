@@ -7,7 +7,7 @@ RUN apk update && \
 COPY . /app
 WORKDIR /app
 
-RUN bundle config path lib
+RUN bundle config set path lib
 RUN bundle install
 
 ## Build runtime
@@ -29,6 +29,6 @@ RUN chmod +x /run.sh
 RUN addgroup sinatra
 RUN adduser -S -G sinatra sinatra
 USER sinatra
-RUN bundle config path lib
+RUN bundle config set path lib
 
 ENTRYPOINT ["/run.sh"]

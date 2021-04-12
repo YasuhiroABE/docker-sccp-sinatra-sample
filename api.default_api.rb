@@ -36,25 +36,16 @@ MyApp.add_route('GET', '/search', {
   cross_origin
   # the guts live here
   param_q = params.has_key?(:q) ? Rack::Utils.escape_html(params[:q]).to_str  : "sccp"
-
+  
   require 'uri'
   require 'httpclient'
   client = HTTPClient.new
   url = URI::HTTPS.build({:host => "opm00h.u-aizu.ac.jp", :path => '/solr/api/v1/search', :query => "q=#{param_q}&wt=json"})
   ret = client.get(url)
-  result = JSON.parse(ret.body)
-  
-  result.to_json
-  output = "<ul>"
-  for item in result["response"]["docs"]
-	  output += "<li><a href=\"" + item['id'] + "\">" + item['id'] + "</a>" + result['highlighting'][item['id']].to_json + "</li>"
-  end
-  output += "</ul>"
-  output += "<form method=\"get\" action=\"" + ENV['FORM_BASEURI'] + "\" >"
-  output += "<input type=\"text\" name=\"q\" /><button type=\"submit\">Search</button>"
-  output += "</form>"
-
-  open("header.html").read + output + open("footer.html").read
+  @result = JSON.parse(ret.body)
+  output = erb :header
+  output += erb :main
+  output += erb :footer
 end
 
 
@@ -69,7 +60,6 @@ MyApp.add_route('GET', '/.spec', {
     ]}) do
   cross_origin
   # the guts live here
-
-  {"message" => "yes, it worked"}.to_json
+  File.read("openapi.yaml")
 end
 

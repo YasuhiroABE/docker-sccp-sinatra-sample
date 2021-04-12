@@ -14,8 +14,7 @@ URI_PATH = search
 .PHONY: run bundle-install docker-build docker-build-prod docker-tag docker-push docker-run docker-stop stop
 
 run: bundle-install
-	env FORM_BASEURI="$(PROTOCOL)://$(HOST):$(PORT)/$(URI_PATH)" \
-		bundle exec rackup --host $(HOST) --port $(PORT)
+	bundle exec rackup --host $(HOST) --port $(PORT)
 
 bundle-install:
 	bundle config set path lib
@@ -42,7 +41,7 @@ docker-push:
 docker-run:
 	sudo docker run -it --rm  \
 		--env LC_CTYPE=ja_JP.UTF-8 \
-		-p 8080:8080 \
+		-p $(PORT):8080 \
 		--name $(NAME) \
                 $(IMAGE_NAME)
 
