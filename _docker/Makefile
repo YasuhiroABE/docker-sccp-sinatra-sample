@@ -1,10 +1,10 @@
 
-NAME = solr-frontend
-DOCKER_IMAGE = solr-frontend
+NAME = sinatra-webapp
+DOCKER_IMAGE = sinatra-webapp
 DOCKER_IMAGE_VERSION = 0.1.1
 IMAGE_NAME = $(DOCKER_IMAGE)
 REGISTRY_SERVER = inovtst9.u-aizu.ac.jp
-REGISTRY_LIBRARY = library
+REGISTRY_LIBRARY = $(shell id -un)
 
 PROTOCOL = http
 HOST = 0.0.0.0
