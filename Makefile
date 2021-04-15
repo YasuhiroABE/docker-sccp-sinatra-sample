@@ -5,7 +5,7 @@ OASV_CLI = $(HOME)/.local/bin/openapi-spec-validator
 .PHONY: manual gen-docs gen-code validate clean diff-files
 
 manual:
-	firefox "https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md"
+	firefox "https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.3.md"
 
 gen-docs:
 	$(OAGEN_CLI) generate -g html -o docs -i openapi.yaml
