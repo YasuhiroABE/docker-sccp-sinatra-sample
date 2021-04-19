@@ -42,7 +42,11 @@ MyApp.add_route('GET', '/search', {
   client = HTTPClient.new
   url = URI::HTTPS.build({:host => "opm00h.u-aizu.ac.jp", :path => '/solr/api/v1/search', :query => "q=#{param_q}&wt=json"})
   ret = client.get(url)
-  @result = JSON.parse(ret.body)
+  begin
+    @result = JSON.parse(ret.body)
+  rescue
+    @result = { "response" => { "docs" => [] } }
+  end
   output = erb :header
   output += erb :main
   output += erb :footer
