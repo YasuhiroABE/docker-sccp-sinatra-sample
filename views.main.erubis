@@ -1,0 +1,10 @@
+
+<h2>Search Results</h2>
+<ul>
+<% for item in @result["response"]["docs"] %>
+   <li><a href="<%= item['id'] %>"><%= item['id'] %></a><br /><%= @result['highlighting'][item['id']]["content"][0].to_json %></li>
+<% end %>
+</ul>
+<form method="get" action="" >
+<input type="text" name="q" value="<%= Rack::Utils.escape_html(@param_q) %>" /><button type="submit">Search</button>
+</form>

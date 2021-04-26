@@ -35,12 +35,12 @@ MyApp.add_route('GET', '/search', {
     ]}) do
   cross_origin
   # the guts live here
-  param_q = params.has_key?(:q) ? Rack::Utils.escape_html(params[:q]).to_str  : "sccp"
   
   require 'uri'
   require 'httpclient'
   client = HTTPClient.new
-  url = URI::HTTPS.build({:host => "opm00h.u-aizu.ac.jp", :path => '/solr/api/v1/search', :query => "q=#{param_q}&wt=json"})
+  @param_q = params.has_key?(:q) ? params[:q].to_str  : "sccp"
+  url = URI::HTTPS.build({:host => "opm00h.u-aizu.ac.jp", :path => '/solr/api/v1/search', :query => "q=#{@param_q}&wt=json"})
   ret = client.get(url)
   @result = JSON.parse(ret.body)
   output = erb :header
