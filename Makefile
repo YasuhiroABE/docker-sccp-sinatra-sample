@@ -38,3 +38,8 @@ diff-files:
 	diff -u _docker/header.erubis code/lib/views/header.erubis
 	diff -u _docker/main.erubis code/lib/views/main.erubis
 	diff -u _docker/footer.erubis code/lib/views/footer.erubis
+
+.PHONY: git-push
+git-push:
+	git push
+	git push --tags
