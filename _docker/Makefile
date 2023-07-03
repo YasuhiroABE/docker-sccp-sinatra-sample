@@ -1,5 +1,6 @@
 
 DOCKER_CMD = "docker" ## if you use the non-rootless mode, then changing to "sudo docker"
+DOCKER_BUILDER = mabuilder
 
 NAME = sinatra-webapp
 DOCKER_IMAGE = sinatra-webapp
@@ -51,5 +52,18 @@ docker-stop:
 	$(DOCKER_CMD) stop $(NAME)
 
 stop:
-	killall ruby2.5
+	killall ruby2.7
+
+.PHONY: docker-buildx-init
+docker-buildx-init:
+	$(DOCKER_CMD) buildx create --name $(DOCKER_BUILDER) --use
+
+.PHONY: docker-buildx-setup
+docker-buildx-setup:
+	$(DOCKER_CMD) buildx use $(DOCKER_BUILDER)
+	$(DOCKER_CMD) buildx inspect --bootstrap
+
+.PHONY: docker-buildx-prod
+docker-buildx-prod:
+	$(DOCKER_CMD) buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 --tag $(REGISTRY_SERVER)/$(REGISTRY_LIBRARY)/$(IMAGE_NAME):$(DOCKER_IMAGE_VERSION) --no-cache --push .
 
