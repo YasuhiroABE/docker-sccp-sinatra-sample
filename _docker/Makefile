@@ -67,3 +67,10 @@ docker-buildx-setup:
 docker-buildx-prod:
 	$(DOCKER_CMD) buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 --tag $(REGISTRY_SERVER)/$(REGISTRY_LIBRARY)/$(IMAGE_NAME):$(DOCKER_IMAGE_VERSION) --no-cache --push .
 
+.PHONY: docker-runx
+docker-runx:
+	$(DOCKER_CMD) run -it --rm  \
+		--env LC_CTYPE=ja_JP.UTF-8 \
+		-p $(PORT):8080 \
+		--name $(NAME) \
+		$(REGISTRY_SERVER)/$(REGISTRY_LIBRARY)/$(IMAGE_NAME):$(DOCKER_IMAGE_VERSION)
