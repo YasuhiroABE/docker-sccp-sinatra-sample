@@ -18,9 +18,9 @@ gen-code:
 	cp _docker/Gemfile code/
 	cp _docker/config.ru code/
 	mkdir -p code/lib/views
-	cp _docker/header.erubis code/lib/views/
-	cp _docker/main.erubis code/lib/views/
-	cp _docker/footer.erubis code/lib/views/
+	cp _docker/header.erb code/lib/views/
+	cp _docker/main.erb code/lib/views/
+	cp _docker/footer.erb code/lib/views/
 
 ## Please install the command as following: $ pip3 install openapi-spec-validator --user
 validate:
@@ -35,9 +35,9 @@ diff-files:
 	diff -u _docker/run.sh code/run.sh
 	diff -u _docker/Gemfile code/Gemfile
 	diff -u _docker/config.ru code/config.ru
-	diff -u _docker/header.erubis code/lib/views/header.erubis
-	diff -u _docker/main.erubis code/lib/views/main.erubis
-	diff -u _docker/footer.erubis code/lib/views/footer.erubis
+	diff -u _docker/header.erb code/lib/views/header.erb
+	diff -u _docker/main.erb code/lib/views/main.erb
+	diff -u _docker/footer.erb code/lib/views/footer.erb
 
 .PHONY: git-push
 git-push:
