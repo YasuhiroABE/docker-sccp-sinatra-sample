@@ -5,3 +5,5 @@ gem "sinatra"
 gem "sinatra-cross_origin"
 gem "httpclient"
 gem "json"
+
+gem "rackup"
