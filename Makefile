@@ -1,6 +1,7 @@
 
-DOCKER_CMD = docker
-OAGEN_CLI = $(DOCKER_CMD) run --rm -v "${PWD}:/local" docker.io/openapitools/openapi-generator-cli:latest
+DOCKER_CMD = podman ## default changed to podman from docker
+DOCKER_OPT =        ## default: empty, "--security-opt label=disable"
+OAGEN_CLI = $(DOCKER_CMD) run $(DOCKER_OPT) --rm -v "${PWD}:/local" docker.io/openapitools/openapi-generator-cli:latest
 
 .PHONY: manual gen-docs gen-code validate clean diff-files
 
@@ -24,7 +25,7 @@ gen-code:
 
 ## Please install the command as following: $ pip3 install openapi-spec-validator --user
 validate:
-	$(DOCKER_CMD) run -v `pwd`/openapi.yaml:/openapi.yaml --rm docker.io/pythonopenapi/openapi-spec-validator:latest /openapi.yaml
+	$(DOCKER_CMD) run $(DOCKER_OPT) -v `pwd`/openapi.yaml:/openapi.yaml --rm docker.io/pythonopenapi/openapi-spec-validator:latest /openapi.yaml
 
 clean:
 	find . -type f -name '*~' -exec rm {} \; -print
