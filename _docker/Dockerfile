@@ -14,7 +14,7 @@ RUN bundle install
 FROM docker.io/library/ruby:3.0-alpine
 
 RUN apk update && \
-    apk add --no-cache tzdata bash ca-certificates
+    apk add --no-cache tzdata bash ca-certificates curl
 
 COPY --from=rubydev /app /app
 WORKDIR /app
