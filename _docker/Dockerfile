@@ -24,7 +24,7 @@ ENV FORM_BASEURI http://127.0.0.1:8080/search
 EXPOSE $SINATRA_PORT
 
 ADD run.sh /run.sh
-RUN chmod +x /run.sh
+RUN chmod +rx /run.sh
 
 RUN addgroup sinatra
 RUN adduser -S -G sinatra sinatra
