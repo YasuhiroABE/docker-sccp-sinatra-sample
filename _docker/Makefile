@@ -11,7 +11,8 @@ REGISTRY_SERVER = inovtst9.u-aizu.ac.jp
 REGISTRY_LIBRARY = $(shell id -un)
 
 PROTOCOL = http
-HOST = 0.0.0.0
+HOST =  0.0.0.0
+HOST_IP = $(shell hostname -I | cut -d' ' -f1)
 PORT := $(shell bash -c 'echo $${RANDOM} % 5000 + 5000 | bc')
 URI_PATH = search
 
@@ -44,7 +45,7 @@ docker-push:
 
 docker-run:
 	@echo "------"
-	@echo "URL: http://localhost:$(PORT)/$(URI_PATH)"
+	@echo "URL: http://$(HOST_IP):$(PORT)/$(URI_PATH)"
 	@echo "------"
 	$(DOCKER_CMD) run -it --rm  \
 		$(DOCKER_OPT) \
@@ -75,7 +76,7 @@ docker-buildx-prod:
 .PHONY: docker-runx
 docker-runx:
 	@echo "------"
-	@echo "URL: http://localhost:$(PORT)/$(URI_PATH)"
+	@echo "URL: http://$(HOST_IP):$(PORT)/$(URI_PATH)"
 	@echo "------"
 	$(DOCKER_CMD) run -it --rm  \
 		$(DOCKER_OPT) \
