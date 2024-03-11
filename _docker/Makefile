@@ -12,7 +12,7 @@ REGISTRY_LIBRARY = $(shell id -un)
 
 PROTOCOL = http
 HOST = 0.0.0.0
-PORT = 8080
+PORT := $(shell bash -c 'echo $${RANDOM} % 5000 + 5000 | bc')
 URI_PATH = search
 
 .PHONY: run bundle-install docker-build docker-build-prod docker-tag docker-push docker-run docker-stop stop
@@ -43,6 +43,9 @@ docker-push:
 	$(DOCKER_CMD) push $(REGISTRY_SERVER)/$(REGISTRY_LIBRARY)/$(IMAGE_NAME):$(DOCKER_IMAGE_VERSION)
 
 docker-run:
+	@echo "------"
+	@echo "URL: http://localhost:$(PORT)/$(URI_PATH)"
+	@echo "------"
 	$(DOCKER_CMD) run -it --rm  \
 		$(DOCKER_OPT) \
 		--env LC_CTYPE=ja_JP.UTF-8 \
@@ -71,6 +74,9 @@ docker-buildx-prod:
 
 .PHONY: docker-runx
 docker-runx:
+	@echo "------"
+	@echo "URL: http://localhost:$(PORT)/$(URI_PATH)"
+	@echo "------"
 	$(DOCKER_CMD) run -it --rm  \
 		$(DOCKER_OPT) \
 		--env LC_CTYPE=ja_JP.UTF-8 \
