@@ -2,13 +2,15 @@
 
 This project contains the sample docker implementation deribed from the openapi.yaml file.
 
+# Prerequisites
+
+* Install podman before execute ``make gen-code``
+
 # Getting started
 
-```
-## If the openapi-generator-cli has not been installed yet.
-$ sudo npm install @openapitools/openapi-generator-cli -g
-$ sudo openapi-generator-cli version
+If you enable the SELinux, then uncomment ``DOCKER_OPT = --security-opt label=disable`` of Makefile.
 
+```
 ## to run the docker container
 $ make gen-code
 $ cd code

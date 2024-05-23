@@ -1,6 +1,6 @@
 
 DOCKER_CMD = "podman" ## if you use the non-rootless mode, then changing to "sudo docker"
-DOCKER_OPT =  ## --security-opt label=disable
+DOCKER_OPT =          ## --security-opt label=disable
 DOCKER_BUILDER = mabuilder
 
 NAME = sinatra-webapp

@@ -1,5 +1,5 @@
 
-DOCKER_CMD = podman ## default changed to podman from docker
+DOCKER_CMD = podman ## podman or docker
 DOCKER_OPT =        ## default: empty, "--security-opt label=disable"
 OAGEN_CLI = $(DOCKER_CMD) run $(DOCKER_OPT) --rm -v "${PWD}:/local" docker.io/openapitools/openapi-generator-cli:latest
 
