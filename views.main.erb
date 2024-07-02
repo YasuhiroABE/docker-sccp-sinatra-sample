@@ -1,8 +1,9 @@
-
+<%# -*- mode: web -*- %>
 <h2>Search Results</h2>
+<%= erb :pagination %>
 <ul>
 <% for item in @result["response"]["docs"] %>
-   <li><a href="<%= item['id'] %>"><%= item['id'] %></a><br /><% unless @result['highlighting'][item['id']]["content"].to_s %><%= @result['highlighting'][item['id']]["content"][0].to_json %><% end %></li>
+   <li><a href="<%= item['id'] %>"><%= item['id'] %></a><br /><% unless @result['highlighting'][item['id']]["content"].to_s == "" %><%= @result['highlighting'][item['id']]["content"][0].to_json %><% end %></li>
 <% end %>
 </ul>
 <form method="get" action="" >
