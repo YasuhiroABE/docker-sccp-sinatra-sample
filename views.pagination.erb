@@ -1,0 +1,18 @@
+<%# -*- mode: web -*- %>
+<% num_pages = (1.0 * @result["response"]["numFound"].to_i / @param_rows).round %>
+<% num_max_items = (num_pages < @param_rows) ? num_pages : @param_rows %>
+<% start_index = ( @param_start.to_i / 10 ) * 10  %>
+<% end_index = ( @result["response"]["numFound"].to_i / 10 ) * 10 %>
+
+<% prev_start = ( @param_start - @param_rows > 0 ) ? @param_start - @param_rows : 0 %>
+<% next_start = ( @param_start + @param_rows < @result["response"]["numFound"].to_i ) ? @param_start + @param_rows : @result["response"]["numFound"].to_i - @param_rows %>
+
+<a style="margin-left:1em;" href="?q=<%= Rack::Utils.escape_html(@param_q) %>&start=0&rows=<%= @param_rows %>"><button class="btn btn-outline-primary btn-sm">First</button></a>
+
+<a style="" href="?q=<%= Rack::Utils.escape_html(@param_q) %>&start=<%= prev_start %>&rows=<%= @param_rows %>"><button class="btn btn-outline-primary btn-sm">Previous</button></a>
+
+<button type="button" class="btn btn-default ms-3" disabled="disabled"><%= @param_start %> / <%=@result["response"]["numFound"].to_i %></button>
+
+<a style="margin-left:1em;" href="?q=<%= Rack::Utils.escape_html(@param_q) %>&start=<%= next_start %>&rows=<%= @param_rows %>"><button class="btn btn-outline-primary btn-sm">Next</button></a>
+
+<a href="?q=<%= Rack::Utils.escape_html(@param_q) %>&start=<%= end_index %>&rows=<%= @param_rows %>"><button class="btn btn-outline-primary btn-sm">Last</button></a>
