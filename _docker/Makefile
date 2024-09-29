@@ -2,6 +2,8 @@
 DOCKER_CMD = "podman" ## if you use the non-rootless mode, then changing to "sudo docker"
 DOCKER_OPT =          ## --security-opt label=disable
 DOCKER_BUILDER = mabuilder
+DOCKER_PLATFORM = linux/amd64 ## if you use the macos, then changing it to "linux/arm64"
+DOCKER_PLATFORMS = linux/amd64,linux/arm64
 
 NAME = sinatra-webapp
 DOCKER_IMAGE = sinatra-webapp
@@ -16,33 +18,38 @@ HOST_IP = $(shell hostname -I | cut -d' ' -f1)
 PORT := $(shell bash -c 'echo $${RANDOM} % 5000 + 5000 | bc')
 URI_PATH = search
 
-.PHONY: run bundle-install docker-build docker-build-prod docker-tag docker-push docker-run docker-stop stop
-
+.PHONY: run
 run: bundle-install
 	bundle exec rackup --host $(HOST) --port $(PORT)
 
+.PHONY: bundle-install
 bundle-install:
 	bundle config set path lib
 	bundle install
 
-docker-build:
+.PHONY: docker-build-init
+docker-build-init:
 	rm -f Gemfile.lock
 	rm -fr lib/ruby
 	rm -fr .bundle
+
+.PHONY: docker-build
+docker-build: docker-build-init
 	$(DOCKER_CMD) build . --tag $(IMAGE_NAME) $(DOCKER_OPT)
 
-docker-build-prod:
-	rm -f Gemfile.lock
-	rm -fr lib/ruby
-	rm -fr .bundle
+.PHONY: docker-build-prod
+docker-build-prod: docker-build-init
 	$(DOCKER_CMD) build . --pull --tag $(IMAGE_NAME):$(DOCKER_IMAGE_VERSION) --no-cache $(DOCKER_OPT)
 
+.PHONY: docker-tag
 docker-tag:
 	$(DOCKER_CMD) tag $(IMAGE_NAME):$(DOCKER_IMAGE_VERSION) $(REGISTRY_SERVER)/$(REGISTRY_LIBRARY)/$(IMAGE_NAME):$(DOCKER_IMAGE_VERSION)
 
+.PHONY: docker-push
 docker-push:
 	$(DOCKER_CMD) push $(REGISTRY_SERVER)/$(REGISTRY_LIBRARY)/$(IMAGE_NAME):$(DOCKER_IMAGE_VERSION)
 
+.PHONY: docker-run
 docker-run:
 	@echo "------"
 	@echo "URL: http://$(HOST_IP):$(PORT)/$(URI_PATH)"
@@ -54,11 +61,21 @@ docker-run:
 		--name $(NAME) \
                 $(IMAGE_NAME)
 
+.PHONY: docker-stop
 docker-stop:
 	$(DOCKER_CMD) $(DOCKER_OPT) stop $(NAME)
 
+.PHONY: stop
 stop:
-	killall ruby2.7
+	killall ruby
+
+.PHONY: podman-buildx
+podman-buildx: docker-build-init
+	$(DOCKER_CMD) build . --platform $(DOCKER_PLATFORMS) --tag $(IMAGE_NAME) $(DOCKER_OPT)
+
+.PHONY: podman-buildx-prod
+podman-buildx-prod: docker-build-init
+	$(DOCKER_CMD) build . --platform $(DOCKER_PLATFORMS) --tag $(IMAGE_NAME):$(DOCKER_IMAGE_VERSION) --no-cache $(DOCKER_OPT) --pulls
 
 .PHONY: docker-buildx-init
 docker-buildx-init:
@@ -71,7 +88,7 @@ docker-buildx-setup:
 
 .PHONY: docker-buildx-prod
 docker-buildx-prod:
-	$(DOCKER_CMD) buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 --tag $(REGISTRY_SERVER)/$(REGISTRY_LIBRARY)/$(IMAGE_NAME):$(DOCKER_IMAGE_VERSION) --no-cache --push . $(DOCKER_OPT)
+	$(DOCKER_CMD) buildx build --platform $(DOCKER_PLATFORMS) --tag $(REGISTRY_SERVER)/$(REGISTRY_LIBRARY)/$(IMAGE_NAME):$(DOCKER_IMAGE_VERSION) --no-cache --push . $(DOCKER_OPT)
 
 .PHONY: docker-runx
 docker-runx:
