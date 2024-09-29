@@ -35,11 +35,11 @@ docker-build-init:
 
 .PHONY: docker-build
 docker-build: docker-build-init
-	$(DOCKER_CMD) build . --tag $(IMAGE_NAME) $(DOCKER_OPT)
+	$(DOCKER_CMD) build . --tag $(IMAGE_NAME) --platform $(DOCKER_PLATFORM) $(DOCKER_OPT)
 
 .PHONY: docker-build-prod
 docker-build-prod: docker-build-init
-	$(DOCKER_CMD) build . --pull --tag $(IMAGE_NAME):$(DOCKER_IMAGE_VERSION) --no-cache $(DOCKER_OPT)
+	$(DOCKER_CMD) build . --pull --tag $(IMAGE_NAME):$(DOCKER_IMAGE_VERSION) --no-cache --platform $(DOCKER_PLATFORM) $(DOCKER_OPT)
 
 .PHONY: docker-tag
 docker-tag:
