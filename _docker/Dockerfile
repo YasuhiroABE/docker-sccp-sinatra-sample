@@ -5,6 +5,7 @@ RUN apk update && \
     	make gcc libc-dev linux-headers build-base patch
 
 COPY . /app
+RUN chmod -R a+rX /app
 WORKDIR /app
 
 RUN bundle config set path lib
