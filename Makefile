@@ -1,7 +1,9 @@
 
 DOCKER_CMD = podman ## podman or docker
 DOCKER_OPT =        ## default: empty, "--security-opt label=disable"
-OAGEN_CLI = $(DOCKER_CMD) run $(DOCKER_OPT) --rm -v "${PWD}:/local" docker.io/openapitools/openapi-generator-cli:latest
+OAGEN_DOCKER_IMAGE = docker.io/yasuhiroabe/my-ogc:7.10.0
+## OAGEN_DOCKER_IMAGE = docker.io/openapitools/openapi-generator-cli:latest
+OAGEN_CLI = $(DOCKER_CMD) run $(DOCKER_OPT) --rm -v "${PWD}:/local" $(OAGEN_DOCKER_IMAGE)
 
 .PHONY: manual gen-docs gen-code validate clean diff-files
 
