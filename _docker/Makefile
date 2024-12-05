@@ -22,6 +22,9 @@ URI_PATH = search
 
 .PHONY: run
 run: bundle-install
+	@echo "------"
+	@echo "URL: http://$(HOST_IP):$(PORT)/$(URI_PATH)"
+	@echo "------"
 	bundle exec rackup --host $(HOST) --port $(PORT)
 
 .PHONY: bundle-install
