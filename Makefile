@@ -5,16 +5,23 @@ OAGEN_DOCKER_IMAGE = docker.io/yasuhiroabe/my-ogc:7.10.0
 ## OAGEN_DOCKER_IMAGE = docker.io/openapitools/openapi-generator-cli:latest
 OAGEN_CLI = $(DOCKER_CMD) run $(DOCKER_OPT) --rm -v "${PWD}:/local" $(OAGEN_DOCKER_IMAGE)
 
+OAGEN_TARGET := ruby-sinatra
+
 .PHONY: manual gen-docs gen-code validate clean diff-files
 
 manual:
 	firefox "https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.3.md"
 
+list:
+	$(OAGEN_CLI) list
+
 gen-docs:
 	$(OAGEN_CLI) generate -g html -o /local/docs -i /local/openapi.yaml
 
-gen-code:
-	$(OAGEN_CLI) generate -g ruby-sinatra -o /local/code -i /local/openapi.yaml
+gen-code-only:
+	$(OAGEN_CLI) generate -g $(OAGEN_TARGET) -o /local/code -i /local/openapi.yaml
+
+gen-code: gen-code-only
 	cp _docker/Makefile code/
 	cp _docker/Dockerfile code/
 	cp _docker/run.sh code/
