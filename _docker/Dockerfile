@@ -1,4 +1,4 @@
-FROM docker.io/library/ruby:3.3-alpine as rubydev
+FROM docker.io/library/ruby:3.4-alpine as rubydev
 
 RUN apk update && \
     apk add --no-cache tzdata bash ca-certificates \
@@ -12,7 +12,7 @@ RUN bundle config set path lib
 RUN bundle install
 
 ## Build runtime
-FROM docker.io/library/ruby:3.3-alpine
+FROM docker.io/library/ruby:3.4-alpine
 
 RUN apk update && \
     apk add --no-cache tzdata bash ca-certificates curl
