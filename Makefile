@@ -10,7 +10,7 @@ OAGEN_TARGET := ruby-sinatra
 .PHONY: manual gen-docs gen-code validate clean diff-files
 
 manual:
-	firefox "https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.3.md"
+	browse "https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.3.md"
 
 list:
 	$(OAGEN_CLI) list
