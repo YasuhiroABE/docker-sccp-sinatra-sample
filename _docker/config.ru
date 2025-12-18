@@ -1,7 +1,7 @@
 require 'bundler/setup'
 Bundler.require
 
-use Rack::Protection
+# use Rack::Protection
 set :public_folder , File.dirname(__FILE__) + '/public'
 set :static, true
 
