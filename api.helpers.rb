@@ -5,7 +5,7 @@ class MyApp
       require 'uri'
       require 'httpclient'
       client = HTTPClient.new
-      @param_q = params.has_key?(:q) ? params[:q].to_str  : "sccp"
+      @param_q = params.has_key?(:q) ? params[:q].to_str  : ""
       @param_rows = params.has_key?(:rows) ? params[:rows].to_i : 10
       @param_start = params.has_key?(:start) ? params[:start].to_i : 0
       url = nil
