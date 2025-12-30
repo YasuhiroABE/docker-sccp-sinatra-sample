@@ -16,7 +16,7 @@ PROD_IMAGE_NAME := $(REGISTRY_SERVER)/$(REGISTRY_LIBRARY)/$(IMAGE_NAME)
 
 PROTOCOL = http
 HOST =  0.0.0.0
-HOST_IP = $(shell hostname -I || ifconfig | gawk '/inet / && $$2 != "127.0.0.1" {print $$2}' | head -1)
+HOST_IP = $(shell hostname -I | cut -d' ' -f1 || ifconfig | gawk '/inet / && $$2 != "127.0.0.1" {print $$2}' | head -1)
 PORT := $(shell bash -c 'echo $${RANDOM} % 5000 + 5000 | bc')
 URI_PATH = search
 
