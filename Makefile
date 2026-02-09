@@ -31,6 +31,9 @@ gen-code: gen-code-only
 	cp _docker/header.erb code/lib/views/
 	cp _docker/main.erb code/lib/views/
 	cp _docker/footer.erb code/lib/views/
+	cp _docker/mw-check-params.rb code/api/
+	cp _docker/mw-content-security-policy.rb code/api/
+	cp _docker/mw-remove-null-bytes.rb code/api/
 
 ## Please install the command as following: $ pip3 install openapi-spec-validator --user
 validate:
@@ -48,6 +51,9 @@ diff-files:
 	diff -u _docker/header.erb code/lib/views/header.erb
 	diff -u _docker/main.erb code/lib/views/main.erb
 	diff -u _docker/footer.erb code/lib/views/footer.erb
+	diff -u _docker/mw-check-params.rb code/api/mw-check-params.rb
+	diff -u _docker/mw-content-security-policy.rb code/api/mw-content-security-policy.rb
+	diff -u _docker/mw-remove-null-bytes.rb code/api/mw-remove-null-bytes.rb
 
 .PHONY: git-push
 git-push:
