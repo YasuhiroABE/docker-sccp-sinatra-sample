@@ -20,8 +20,8 @@ RUN apk update && \
 COPY --from=rubydev /app /app
 WORKDIR /app
 
-ENV SINATRA_PORT 8080
-ENV FORM_BASEURI http://127.0.0.1:8080/search
+ENV SINATRA_PORT=8080
+ENV FORM_BASEURI=http://127.0.0.1:8080/search
 EXPOSE $SINATRA_PORT
 
 ADD run.sh /run.sh
