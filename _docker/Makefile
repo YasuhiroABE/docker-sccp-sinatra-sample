@@ -64,6 +64,7 @@ docker-run:
 		--env LC_CTYPE=ja_JP.UTF-8 \
 		-p $(PORT):8080 \
 		--name $(NAME) \
+		--net=pasta:-4 \
 		--platform $(DOCKER_PLATFORM) \
                 $(DOCKER_IMAGE)
 
